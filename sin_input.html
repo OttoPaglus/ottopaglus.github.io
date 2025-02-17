@@ -1,0 +1,70 @@
+<html></html>
+    <head>
+        <meta charset="utf-8">
+        
+        <link rel="icon" href="images/bitbug_favicon.ico">
+        <title>
+            Library von Otto Von Paglus 
+        </title>
+    </head>
+    <body>
+        <center>
+            <h1>旁奕尔的图书馆</h1>
+            <h2>编目模块</h2>
+            <h3>单本书输入模式</h3>
+        </center>
+        <hr width="80%">
+        <form name="input" action="/data" method="post">
+            <center>
+                请输入书籍编码：<input  id='bookid'type="text" name="bookid"><br> 
+                请输入书名：<input  id='bookname'type="text" name="bookname"><br> 
+                请输入作者：<input  id='writer'type="text" name="writer"><br>
+                请输入作者国籍（例：【德】）：<input  id='nation'type="text" name="nation"><br>
+                请输入ISBN：<input  id='isbn'type="text" name="isbn"><br>
+                请输入分类号（一）（参照CIP）：<input  id='cbcm'type="text" name="cbcm"><br>
+                请输入分类号（二）（外文专用）：<input  id='duwei_ten'type="text" name="duwei_ten"><br>
+                请输入购入时间：<input  id='buytime'type="text" name="buytime"><br>
+                请输入购入地点：<input  id='buyplace'type="text" name="buyplace"><br>
+                请输入购入原因：<input  id='reason'type="text" name="reason"><br>
+                请输入入库时间：<input  id='catatime'type="text" name="catatime"><br>
+                请输入藏书位置：<input  id='bookplace'type="text" name="bookplace"><br>
+                <h3>完成请点这</h3>
+                <input type="button" onclick="save()" value="新增记录"/> 
+                <p>---------------</p>
+                输入别名(key)：<input type="text" id="search_bookid" name="search_bookid"/>  
+                <input type="button" onclick="find()" value="查找记录"/>  
+                <p id="find_result"><br/></p>  
+            </center>
+        </form>
+    </body>
+    <script>
+        //保存数据  
+        function save()
+        {  
+            var data = new Object;
+            data.bookid=document.getElementById("bookid").value;
+            data.bookname = document.getElementById("bookname").value;
+            data.writer = document.getElementById("writer").value;  
+            data.nation = document.getElementById("nation").value;
+            data.isbn = document.getElementById("isbn").value;
+            data.cbcm = document.getElementById("cbcm").value;
+            data.duwei_ten= document.getElementById("duwei_ten").value;
+            data.buytime = document.getElementById("buytime").value;
+            data.buyplace = document.getElementById("buyplace").value;
+            data.reason = document.getElementById("reason").value;
+            data.catatime = document.getElementById("catatime").value;
+            data.bookplace = document.getElementById("bookplace").value;
+            var str = JSON.stringify(data); // 将对象转换为字符串
+            localStorage.setItem(data.bookid,str);  
+            alert("保存成功");
+        }  
+        function find()
+        {  
+            var search_bookid = document.getElementById("search_bookid").value;  
+            var str1 = localStorage.getItem(search_bookid);  
+            var find_result = document.getElementById("find_result");
+            var bookinfo = JSON.parse(str1);  
+            find_result.innerHTML = search_bookid + "的信息是：" + bookinfo.bookname + "，" + bookinfo.writer +"," + bookinfo.nation +"," + bookinfo.isbn +"," + bookinfo.cbcm +"," + bookinfo.duwei_ten +"," + bookinfo.buytime +"," + bookinfo.buyplace +"," + bookinfo.reason +"," + bookinfo.catatime +"," + bookinfo.bookplace;  
+        }   
+    </script>
+</html>
